@@ -3,482 +3,383 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PixelWave Marketing — Image Gallery</title>
+  <title>PixelWave · Gallery</title>
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#111b33;
-      --muted:#9fb2d4;
-      --text:#e8f0ff;
-      --accent:#6ea8fe;
-      --accent2:#7cdbb5;
-      --danger:#ff6b6b;
+    :root {
+      --bg: #0b1220;
+      --card: #111b33;
+      --muted: #9fb2d4;
+      --text: #e8f0ff;
+      --accent: #6ea8fe;
+      --accent2: #7cdbb5;
+      --radius: 18px;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    * { box-sizing: border-box; margin: 0; }
+    body {
       background: radial-gradient(1200px 700px at 20% 0%, rgba(110,168,254,.18), transparent 55%),
                   radial-gradient(900px 600px at 90% 10%, rgba(124,219,181,.14), transparent 50%),
                   var(--bg);
-      color:var(--text);
-      min-height:100vh;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji";
+      min-height: 100vh;
+      padding: 0 16px;
     }
-    a{color:inherit}
-    header{
-      position:sticky; top:0; z-index:5;
-      background: rgba(11,18,32,.75);
-      backdrop-filter: blur(10px);
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:18px 16px}
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .3px;
     }
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px}
-    .logo{
-      width:34px; height:34px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(110,168,254,1), rgba(124,219,181,1));
+    .logo {
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6ea8fe, #7cdbb5);
       box-shadow: 0 10px 22px rgba(110,168,254,.25);
     }
-    nav button{
-      appearance:none; border:1px solid rgba(255,255,255,.12);
-      background: rgba(17,27,51,.35);
-      color:var(--text);
-      padding:10px 12px; border-radius:14px;
-      cursor:pointer; font-weight:650;
-      transition: transform .05s ease, border-color .15s ease, background .15s ease;
-      margin-left:10px;
+    nav {
+      display: flex;
+      gap: 8px;
     }
-    nav button:hover{border-color: rgba(110,168,254,.55)}
-    nav button:active{transform: translateY(1px)}
-
-    main{padding:26px 0 60px}
-
-    .grid2{display:grid; grid-template-columns: 1.3fr .7fr; gap:16px}
-    @media (max-width: 900px){.grid2{grid-template-columns:1fr}}
-
-    .card{
+    nav button {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(17,27,51,.35);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 40px;
+      font-weight: 650;
+      cursor: pointer;
+      transition: .15s ease;
+      font-size: 0.9rem;
+    }
+    nav button:hover {
+      border-color: rgba(110,168,254,.55);
+      background: rgba(17,27,51,.7);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 0 40px;
+    }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    @media (max-width: 800px) {
+      .grid2 { grid-template-columns: 1fr; }
+    }
+    .card {
       background: rgba(17,27,51,.65);
       border: 1px solid rgba(255,255,255,.08);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding:18px;
+      padding: 20px;
     }
-    .hero{
+    .hero {
       background: linear-gradient(180deg, rgba(110,168,254,.10), rgba(17,27,51,.35));
     }
-    h1{margin:0 0 8px; font-size: 28px}
-    p{margin:10px 0; color:var(--muted); line-height:1.55}
-
-    .pages{display:none}
-    .pages.active{display:block}
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
-      background: rgba(17,27,51,.35);
-      color:var(--muted);
-      font-weight:650;
-      font-size: 13px;
+      background: rgba(17,27,51,.5);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 0.85rem;
     }
-
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:14px;
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 14px 0 6px;
     }
-    @media (max-width: 700px){.gallery{grid-template-columns:1fr}}
-
-    .imgCard{
-      background: rgba(17,27,51,.55);
-      border: 1px solid rgba(255,255,255,.08);
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 8px 0;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: 1fr; }
+    }
+    .imgCard {
+      background: rgba(17,27,51,.6);
+      border: 1px solid rgba(255,255,255,.06);
       border-radius: 16px;
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      min-height: 140px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .filename{font-weight:800}
-    .sub{color:var(--muted); font-size:13px}
-
-    button.primary{
-      appearance:none;
+    .filename {
+      font-weight: 700;
+      font-size: 1rem;
+      word-break: break-word;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    button.primary {
+      appearance: none;
       border: 0;
-      background: linear-gradient(135deg, rgba(110,168,254,1), rgba(124,219,181,1));
-      color:#07101f;
-      font-weight:900;
-      padding:10px 12px;
-      border-radius: 14px;
-      cursor:pointer;
-      transition: transform .05s ease, filter .15s ease;
+      background: linear-gradient(135deg, #6ea8fe, #7cdbb5);
+      color: #07101f;
+      font-weight: 800;
+      padding: 10px 12px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: .1s ease;
+      margin-top: 4px;
+      font-size: 0.9rem;
+      align-self: flex-start;
     }
-    button.primary:hover{filter: brightness(1.05)}
-    button.primary:active{transform: translateY(1px)}
-    button.primary:disabled{opacity:.6; cursor:not-allowed}
-
-    .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
-
-    .preview{
-      width:100%;
+    button.primary:hover { filter: brightness(1.05); }
+    button.primary:active { transform: scale(0.97); }
+    .preview {
+      width: 100%;
       aspect-ratio: 16/10;
       border-radius: 16px;
       border: 1px dashed rgba(255,255,255,.18);
-      background: rgba(8,14,27,.35);
-      display:flex; align-items:center; justify-content:center;
+      background: rgba(8,14,27,.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--muted);
-      overflow:hidden;
+      overflow: hidden;
     }
-    .preview img{width:100%; height:100%; object-fit:cover; display:block}
-
-    .status{
-      margin-top:12px;
-      padding:12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.15);
+    .preview img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .preview-placeholder {
+      text-align: center;
+      padding: 12px;
+    }
+    .preview-placeholder div:first-child {
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .footer {
+      max-width: 1100px;
+      margin: 40px auto 0;
+      padding: 24px 16px 30px;
+      color: rgba(159,178,212,.7);
+      text-align: center;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    /* pages */
+    .page { display: none; }
+    .page.active { display: block; }
+    .status {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.06);
       color: var(--muted);
-      font-size: 13px;
-      line-height:1.45;
+      font-size: 0.9rem;
     }
-    .status strong{color:var(--text)}
-    .error{border-color: rgba(255,107,107,.45); background: rgba(255,107,107,.10)}
-
-    .code{
-      word-break: break-all;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      color:#cfe0ff;
-    }
-
-    .footer{
-      padding: 18px 16px 40px;
-      color: rgba(159,178,212,.85);
-      text-align:center;
-      font-size: 13px;
-    }
+    .status strong { color: var(--text); }
+    .inline-muted { color: var(--muted); font-size: 0.9rem; }
+    .mt-2 { margin-top: 12px; }
   </style>
 </head>
 <body>
 <header>
-  <div class="wrap nav">
-    <div class="brand"><div class="logo" aria-hidden="true"></div><div>PixelWave Marketing</div></div>
-    <nav aria-label="Primary">
-      <button type="button" data-nav="home">Home</button>
-      <button type="button" data-nav="gallery">Gallery</button>
-      <button type="button" data-nav="about">About</button>
-      <button type="button" data-nav="contact">Contact</button>
-    </nav>
-  </div>
+  <div class="brand"><div class="logo"></div><span>PixelWave</span></div>
+  <nav>
+    <button type="button" data-nav="home">Home</button>
+    <button type="button" data-nav="gallery">Gallery</button>
+    <button type="button" data-nav="about">About</button>
+  </nav>
 </header>
 
-<main>
-  <div class="wrap">
-
-    <!-- HOME -->
-    <section class="pages active" id="page-home">
-      <div class="grid2">
-        <div class="card hero">
-          <div class="pill">🔒 Private S3 + Temporary Links</div>
-          <h1 style="margin-top:14px">Corporate event photos, securely delivered.</h1>
-          <p>
-            Photos are stored in a <strong>private</strong> Amazon S3 bucket. When an employee clicks
-            <strong>View Image</strong>, the app asks a serverless backend (API Gateway + Lambda)
-            to create a <strong>temporary 5-minute pre-signed URL</strong>.
-          </p>
-          <p>
-            This means you can’t open S3 objects directly, and URLs automatically expire.
-          </p>
-          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="primary" type="button" data-go="gallery">Open Gallery</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h1 style="font-size:18px; margin:0 0 10px">Quick How It Works</h1>
-          <ol style="margin:0; padding-left:18px; color:var(--muted); line-height:1.6">
-            <li>Pick an image in the Gallery.</li>
-            <li>Frontend calls API Gateway.</li>
-            <li>Lambda checks the file exists in S3.</li>
-            <li>Lambda returns a pre-signed URL valid for 300 seconds.</li>
-            <li>Browser displays the image using that temporary URL.</li>
-          </ol>
-        </div>
+<div class="wrap">
+  <!-- HOME -->
+  <section class="page active" id="page-home">
+    <div class="grid2">
+      <div class="card hero">
+        <div class="pill">📸 Local Gallery</div>
+        <h1>Event photos, previewed instantly</h1>
+        <p>Click <strong>View Image</strong> to preview any photo. This demo uses local sample images from the <code>files/</code> folder.</p>
+        <p>No backend required — just clean, fast previews.</p>
+        <button class="primary" type="button" data-go="gallery" style="margin-top:10px;">Browse Gallery →</button>
       </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="pages" id="page-gallery">
       <div class="card">
-        <div class="row" style="margin-bottom:10px; flex-wrap:wrap">
-          <div>
-            <div class="pill">🖼️ Event Gallery</div>
-            <h1 style="margin-top:12px">Select an event photo</h1>
-            <p style="margin-top:6px">Click a photo to generate a secure link. The link expires in 5 minutes.</p>
-          </div>
-          <div class="pill" id="timer-pill" title="Time remaining for the current secure link">
-            ⏳ <span id="timer-text">No active link</span>
+        <h1 style="font-size:1.2rem; margin:0 0 8px;">How it works</h1>
+        <ol style="margin:0; padding-left:18px; color:var(--muted); line-height:1.7;">
+          <li>Pick an image in the Gallery.</li>
+          <li>Preview appears instantly on the right.</li>
+          <li>Images are served locally — no external calls.</li>
+        </ol>
+        <p style="margin-top:12px; font-size:0.9rem;">✔️ 4 sample images from <code>files/</code></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="page" id="page-gallery">
+    <div class="card">
+      <div class="pill">🖼️ Event Gallery</div>
+      <h1 style="margin: 10px 0 0;">Select a photo</h1>
+      <p style="margin-top:4px;">Click any image card to preview it on the right.</p>
+
+      <div class="grid2" style="margin-top:14px;">
+        <div>
+          <div class="gallery" id="gallery-grid"></div>
+          <div class="status" id="status-box">
+            <strong>Status:</strong> Choose an image to preview.
           </div>
         </div>
-
-        <div class="grid2">
-          <div>
-            <div class="gallery" id="gallery-grid" aria-label="Gallery grid"></div>
-            <div class="status" id="status-box" style="margin-top:14px">
-              <strong>Status:</strong> Choose an image to begin.
+        <div>
+          <div class="preview" id="preview">
+            <div class="preview-placeholder">
+              <div>Image Preview</div>
+              <div style="color:var(--muted); font-size:0.9rem;">Click a gallery item</div>
             </div>
           </div>
-
-          <div>
-            <div class="preview" id="preview" aria-label="Image preview">
-              <div>
-                <div style="font-weight:900; margin-bottom:6px">Image Preview</div>
-                <div style="color:var(--muted)">Secure URL will appear here</div>
-              </div>
-            </div>
-
-            <div class="status" style="margin-top:14px">
-              <strong>Secure Link (Pre-signed):</strong>
-              <div class="code" id="url-box" style="margin-top:8px; color:#cfe0ff">—</div>
-              <div style="margin-top:10px; color:var(--muted)">
-                Note: direct access to S3 is blocked; only this temporary link allows viewing.
-              </div>
-            </div>
+          <div class="status" style="margin-top:14px;">
+            <strong>Preview info</strong>
+            <div class="inline-muted" style="margin-top:6px;">Images are shown from local sample files.</div>
           </div>
         </div>
-
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ABOUT -->
-    <section class="pages" id="page-about">
-      <div class="card">
-        <div class="pill">✨ About</div>
-        <h1 style="margin-top:14px">PixelWave Marketing Image Gallery</h1>
-        <p>
-          This is a beginner-friendly serverless demo that connects a simple multi-page HTML UI
-          with a secure backend. Images remain private in S3. The only access path is a Lambda
-          generated pre-signed URL that expires after 5 minutes.
-        </p>
-        <p>
-          Stack: Amplify (hosting) + API Gateway (REST) + Lambda (Python 3.9) + S3 (private).
-        </p>
-      </div>
-    </section>
+  <!-- ABOUT -->
+  <section class="page" id="page-about">
+    <div class="card">
+      <div class="pill">✨ About</div>
+      <h1 style="margin-top:12px;">PixelWave Marketing Gallery</h1>
+      <p>Clean, minimalist image gallery built as a single HTML page. All images are local samples — perfect for demonstrations, prototypes, or as a starting point for a larger project.</p>
+      <p>This version removes all API / backend logic from the UI, keeping the focus on the visual experience.</p>
+      <p style="margin-top:8px;"><span style="color:var(--text);">Files:</span> annual-meetup.jpg, product-launch.jpg, team-building.jpg, client-conference.jpg</p>
+    </div>
+  </section>
+</div>
 
-    <!-- CONTACT -->
-    <section class="pages" id="page-contact">
-      <div class="card">
-        <div class="pill">📩 Contact</div>
-        <h1 style="margin-top:14px">Need access help?</h1>
-        <p>
-          For this challenge, the gallery is designed to work for employees.
-          If you’re setting this up, verify:
-        </p>
-        <ul style="color:var(--muted); line-height:1.7; margin-top:0">
-          <li>Lambda has permission to read from your S3 bucket.</li>
-          <li>API Gateway has CORS enabled.</li>
-          <li>You updated API_URL in index.html with your endpoint.</li>
-          <li>Your S3 bucket blocks public access.</li>
-        </ul>
-      </div>
-    </section>
-
-  </div>
-</main>
-
-<div class="footer">© <span id="year"></span> PixelWave Marketing. Secure gallery demo.</div>
+<div class="footer">© <span id="year"></span> PixelWave Marketing · Gallery demo</div>
 
 <script>
-  // =============================================================
-  // FRONTEND CONFIG
-  // IMPORTANT: Replace this with your real API Gateway invoke URL.
-  // Example:
-  // https://xxxx.execute-api.us-east-1.amazonaws.com/prod/generate-url
-  // =============================================================
-  const API_URL = 'https://x6ht4v0ow8.execute-api.us-east-1.amazonaws.com/prod/generate-url';
+  (function() {
+    // ----- configuration -----
+    const IMAGES = [
+      'annual-meetup.jpg',
+      'product-launch.jpg',
+      'team-building.jpg',
+      'client-conference.jpg'
+    ];
 
-  // The 4 images expected in your S3 bucket under the 'images/' prefix.
-  const IMAGES = [
-    'annual-meetup.jpg',
-    'product-launch.jpg',
-    'team-building.jpg',
-    'client-conference.jpg'
-  ];
+    // local preview mapping (files/ folder)
+    const LOCAL_PREVIEW_MAP = {
+      'annual-meetup.jpg': 'files/i (1).png',
+      'product-launch.jpg': 'files/i (2).png',
+      'team-building.jpg': 'files/i (3).png',
+      'client-conference.jpg': 'files/i (4).png'
+    };
 
-  const LOCAL_PREVIEW_MAP = {
-    'annual-meetup.jpg': 'files/i (1).png',
-    'product-launch.jpg': 'files/i (2).png',
-    'team-building.jpg': 'files/i (3).png',
-    'client-conference.jpg': 'files/i (4).png'
-  };
+    // DOM refs
+    const galleryGrid = document.getElementById('gallery-grid');
+    const previewEl = document.getElementById('preview');
+    const statusBox = document.getElementById('status-box');
 
-  // ======= DOM helpers =======
-  const pages = Array.from(document.querySelectorAll('.pages'));
-  const timerText = document.getElementById('timer-text');
-  const timerPill = document.getElementById('timer-pill');
-  const statusBox = document.getElementById('status-box');
-  const galleryGrid = document.getElementById('gallery-grid');
-  const preview = document.getElementById('preview');
-  const urlBox = document.getElementById('url-box');
+    // ----- helpers -----
+    function setStatus(msg, isError = false) {
+      statusBox.innerHTML = `<strong>Status:</strong> ${msg}`;
+      statusBox.style.borderColor = isError ? 'rgba(255,107,107,.45)' : 'rgba(255,255,255,.06)';
+      statusBox.style.background = isError ? 'rgba(255,107,107,.10)' : 'rgba(0,0,0,.18)';
+    }
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+    // ----- render gallery -----
+    function renderGallery() {
+      galleryGrid.innerHTML = '';
+      IMAGES.forEach(name => {
+        const card = document.createElement('div');
+        card.className = 'imgCard';
+        card.innerHTML = `
+          <div class="filename">${name}</div>
+          <div class="sub">local sample</div>
+          <button class="primary" type="button">View Image</button>
+        `;
+        const btn = card.querySelector('button');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          previewImage(name);
+        });
+        galleryGrid.appendChild(card);
+      });
+    }
 
-  // ======= Navigation (single HTML file with show/hide) =======
-  function showPage(pageKey){
-    pages.forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageKey}`).classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-
-  document.querySelectorAll('[data-nav]').forEach(btn => {
-    btn.addEventListener('click', () => showPage(btn.getAttribute('data-nav')));
-  });
-
-  document.querySelectorAll('[data-go]').forEach(btn => {
-    btn.addEventListener('click', () => showPage(btn.getAttribute('data-go')));
-  });
-
-  // ======= Countdown timer for pre-signed URL expiry =======
-  let timerInterval = null;
-  let currentExpiresAt = null; // epoch ms
-
-  function startCountdown(expiresEpochSeconds){
-    stopCountdown();
-    currentExpiresAt = expiresEpochSeconds * 1000;
-
-    function render(){
-      const now = Date.now();
-      const diffMs = currentExpiresAt - now;
-      if(diffMs <= 0){
-        timerText.textContent = 'Expired';
-        timerPill.style.borderColor = 'rgba(255,107,107,.55)';
+    // ----- preview logic (local only) -----
+    function previewImage(imageName) {
+      const localPath = LOCAL_PREVIEW_MAP[imageName];
+      if (!localPath) {
+        previewEl.innerHTML = `<div class="preview-placeholder"><div>⚠️</div><div style="color:var(--muted);">No preview available</div></div>`;
+        setStatus(`No preview found for "${imageName}"`, true);
         return;
       }
-      const totalSeconds = Math.ceil(diffMs / 1000);
-      const m = Math.floor(totalSeconds / 60);
-      const s = totalSeconds % 60;
-      timerText.textContent = `${m}:${String(s).padStart(2,'0')} remaining`;
-      timerPill.style.borderColor = 'rgba(124,219,181,.55)';
+
+      // build image element
+      const img = document.createElement('img');
+      img.alt = imageName;
+      img.src = localPath;
+
+      // clear and append
+      previewEl.innerHTML = '';
+      previewEl.appendChild(img);
+
+      setStatus(`Showing <strong>${imageName}</strong>`);
     }
 
-    render();
-    timerInterval = setInterval(render, 250);
-  }
+    // ----- navigation (single page) -----
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById('page-' + id);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-  function stopCountdown(){
-    if(timerInterval) clearInterval(timerInterval);
-    timerInterval = null;
-    currentExpiresAt = null;
-    timerText.textContent = 'No active link';
-    timerPill.style.borderColor = 'rgba(255,255,255,.12)';
-  }
-
-  // ======= Status messages =======
-  function setStatus(message, {type='info'} = {}){
-    statusBox.classList.remove('error');
-    if(type === 'error') statusBox.classList.add('error');
-    statusBox.innerHTML = `<strong>Status:</strong> ${message}`;
-  }
-
-  // ======= Gallery grid rendering =======
-  function renderGallery(){
-    galleryGrid.innerHTML = '';
-    IMAGES.forEach(name => {
-      const card = document.createElement('div');
-      card.className = 'imgCard';
-
-      card.innerHTML = `
-        <div class="filename">${name}</div>
-        <div class="sub">Stored in private S3 bucket</div>
-        <button class="primary" type="button">View Image</button>
-      `;
-
-      const btn = card.querySelector('button');
-      btn.addEventListener('click', () => onViewImage(name, btn));
-
-      galleryGrid.appendChild(card);
+    document.querySelectorAll('[data-nav]').forEach(btn => {
+      btn.addEventListener('click', () => showPage(btn.getAttribute('data-nav')));
     });
-  }
+    document.querySelectorAll('[data-go]').forEach(btn => {
+      btn.addEventListener('click', () => showPage(btn.getAttribute('data-go')));
+    });
 
-  // ======= API call to Lambda for pre-signed URL =======
-  async function onViewImage(imageName, buttonEl){
-    // Reset UI
-    stopCountdown();
-    preview.innerHTML = '<div><div style="font-weight:900; margin-bottom:6px">Loading…</div><div style="color:var(--muted)">Generating secure link</div></div>';
-    urlBox.textContent = '—';
+    // ----- set year -----
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    const localPreview = LOCAL_PREVIEW_MAP[imageName];
-    if(localPreview){
-      const img = document.createElement('img');
-      img.alt = imageName;
-      img.src = localPreview;
-      preview.innerHTML = '';
-      preview.appendChild(img);
-    }
-
-    if(!API_URL || API_URL.includes('YOUR_API_GATEWAY_INVOKE_URL_HERE')){
-      setStatus('API_URL is not set. Preview is shown from local sample files. Replace API_URL in index.html with your API Gateway invoke URL for secure access.', {type:'info'});
-      return;
-    }
-
-    buttonEl.disabled = true;
-    buttonEl.textContent = 'Working…';
-
-    try{
-      setStatus(`Requesting secure link for <strong>${imageName}</strong>…`);
-
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // Lambda expects imageName from API Gateway
-        body: JSON.stringify({ imageName })
-      });
-
-      if(!res.ok){
-        const txt = await res.text().catch(() => '');
-        throw new Error(`API error (${res.status}). ${txt}`.trim());
-      }
-
-      const data = await res.json();
-
-      if(!data.url || !data.expires){
-        throw new Error('Unexpected response from backend. Expected { url, expires }.');
-      }
-
-      // expires is epoch timestamp (seconds)
-      startCountdown(data.expires);
-
-      // Display image using the pre-signed URL
-      preview.innerHTML = '';
-      const img = document.createElement('img');
-      img.alt = imageName;
-      img.src = data.url;
-      preview.appendChild(img);
-
-      urlBox.textContent = data.url;
-      setStatus(`Secure link generated. It expires in 5 minutes for <strong>${imageName}</strong>.`);
-
-    }catch(err){
-      setStatus(err?.message || String(err), {type:'error'});
-      // Keep local preview if present, otherwise show unavailable
-      if(!localPreview){
-        preview.innerHTML = '<div><div style="font-weight:900; margin-bottom:6px">Preview unavailable</div><div style="color:var(--muted)">Try another image</div></div>';
-      }
-    }finally{
-      buttonEl.disabled = false;
-      buttonEl.textContent = 'View Image';
-    }
-  }
-
-  // Start
-  renderGallery();
+    // ----- init -----
+    renderGallery();
+    // set default preview
+    previewEl.innerHTML = `<div class="preview-placeholder"><div>Image Preview</div><div style="color:var(--muted);">Click a gallery item</div></div>`;
+    setStatus('Choose an image to preview.');
+  })();
 </script>
+
 </body>
 </html>
-
