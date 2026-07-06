@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: PixelWave Marketing Image Gallery — private S3 + pre-signed URL via Lambda
+
+Globals:
+  Function:
+    Runtime: python3.9
+    Timeout: 10
+    MemorySize: 128
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: S3 bucket that stores images under the /images/ prefix (must be private)
+
+Resources:
+  GalleryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: pixelwave-gallery-function
+      CodeUri: ./
+      Handler: lambda_function.lambda_handler
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:HeadObject
+                - s3:GetObject
+              Resource:
+                - !Sub 'arn:aws:s3:::${BucketName}/images/*'
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref BucketName
+      Events:
+        GalleryApi:
+          Type: Api
+          Properties:
+            Path: /generate-url
+            Method: post
+            RestApiId: !Ref GalleryApi
+            Auth:
+              NONE
+
+  GalleryApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: pixelwave-gallery-api
+      StageName: prod
+      EndpointConfiguration: REGIONAL
+      Cors:
+        AllowMethods: "OPTIONS,POST"
+        AllowHeaders: "Content-Type"
+        AllowOrigin: "*"
+
+Outputs:
+  ApiInvokeUrl:
+    Description: Invoke URL for the generate-url endpoint
+    Value: !Sub 'https://${GalleryApi}.execute-api.${AWS::Region}.amazonaws.com/prod/generate-url'
+  FunctionName:
+    Value: !Ref GalleryFunction
+
